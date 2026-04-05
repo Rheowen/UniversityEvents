@@ -129,10 +129,7 @@ Coverage artifacts are generated in `coverage/`.
 ## Next implementation targets
 
 - Story 4 Edit event
-- Story 6 Join event
-- Story 7 Participant limit lock with transactional control
 - Story 8 Check-in attendance
 - Story 9 Participation history
-- Story 10 Dashboard metrics and reports
 - Story 12 Feedback (one submission per attended event)
 - Story 13 Search and filter events
