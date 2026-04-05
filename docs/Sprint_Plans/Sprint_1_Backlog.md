@@ -78,7 +78,7 @@
 
 **Story Points:** 5  
 **Assigned:** นักพัฒนา Backend  
-**Status:** 🟡 Partial  
+**Status:** ✅ Done
 **Dependencies:** US-01, US-02
 
 **Tasks:**
@@ -162,7 +162,7 @@
 
 **Story Points:** 5  
 **Assigned:** นักพัฒนา Backend + Frontend  
-**Status:** ✅ Done  
+**Status:** 🟡 Partial   
 **Dependencies:** US-07
 
 **Tasks:**
