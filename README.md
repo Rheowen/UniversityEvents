@@ -1,59 +1,98 @@
 # University Event Management System
 
-Initial implementation is started with:
-- Backend: Node.js + Express + MySQL
+
+## ภาพรวมโครงการ
+
+University Event Management System เป็นแพลตฟอร์มเว็บสำหรับบริหารกิจกรรมภายในมหาวิทยาลัย โดยครอบคลุมกระบวนการหลักตั้งแต่การสร้างกิจกรรม การอนุมัติกิจกรรม การลงทะเบียนเข้าร่วม และการยกเลิกลงทะเบียน
+
+
+
+## ฟีเจอร์หลัก
+
+### 1. ระบบบัญชีผู้ใช้และสิทธิ์การเข้าถึง
+- สมัครสมาชิกและเข้าสู่ระบบด้วยอีเมล/รหัสผ่าน
+- ใช้ JWT สำหรับการยืนยันตัวตน
+- ควบคุมสิทธิ์ตามบทบาทผู้ใช้
+
+### 2. ระบบจัดการกิจกรรม
+- ผู้สอนหรือผู้ดูแลสร้างกิจกรรมใหม่
+- กิจกรรมใหม่เข้าสถานะรออนุมัติ
+- แสดงรายการกิจกรรมที่ผ่านการอนุมัติแล้วสำหรับผู้ใช้ทั่วไป
+
+### 3. ระบบอนุมัติและลงทะเบียน
+- ผู้มีสิทธิ์ตรวจสอบคิวกิจกรรมที่รออนุมัติ
+- อนุมัติหรือปฏิเสธกิจกรรมพร้อมบันทึกผล
+- นิสิตลงทะเบียนเข้าร่วมกิจกรรมและยกเลิกการลงทะเบียนได้
+
+### 4. ระบบตรวจสอบคุณภาพ
+- Unit และ Integration tests ด้วย Jest + Supertest
+- วัด coverage อัตโนมัติ
+- ตรวจคุณภาพโค้ดด้วย ESLint
+
+## บทบาทผู้ใช้งาน
+
+| บทบาท | หน้าที่หลัก |
+|---|---|
+| STUDENT | ดูกิจกรรมที่อนุมัติแล้ว ลงทะเบียน และยกเลิกการลงทะเบียน |
+| LECTURER | สร้างกิจกรรมและอนุมัติกิจกรรมตามสิทธิ์ |
+
+## เทคโนโลยีที่ใช้
+
 - Frontend: React + Vite
+- Backend: Node.js + Express
+- Database: MySQL
+- Validation: Zod
+- Authentication: JWT + bcryptjs
+- Testing: Jest + Supertest
+- Quality: ESLint
+- Environment: Docker Compose (สำหรับ MySQL/phpMyAdmin)
 
-## Completed in this iteration
+## โครงสร้างโปรเจกต์
 
-### Story 1: Registration (implemented)
-- Email and password registration endpoint
-- Email format validation
-- Password minimum length (8)
-- Duplicate email prevention
-- Password hashing with bcrypt
-- Auto-login token returned on successful registration
+```text
+.
+├── backend
+│   ├── database
+│   ├── src
+│   │   ├── config
+│   │   ├── controllers
+│   │   ├── middlewares
+│   │   ├── models
+│   │   ├── routes
+│   │   ├── utils
+│   │   └── validators
+│   └── tests
+│       ├── integration
+│       └── unit
+├── frontend
+│   ├── public
+│   └── src
+│       ├── api
+│       ├── components
+│       ├── context
+│       └── pages
+├── docs
+├── coverage
+└── docker-compose.yml
+```
 
-### Story 2: Login (implemented)
-- Email/password login endpoint
-- Invalid credentials handling
-- JWT token issued after successful login
-- Frontend redirects authenticated user to dashboard
+## การติดตั้งและเริ่มใช้งาน
 
-### Story 3: Create Event (backend started)
-- Endpoint for lecturer/admin to create event
-- Event starts with `PENDING` approval status
+### ทางเลือก A: ใช้ Docker Compose สำหรับฐานข้อมูล
 
-### Story 5: View Event List (backend started)
-- Public endpoint returns approved events
-
-### Story 11: Approve Event (backend started)
-- List pending events endpoint
-- Approve/reject endpoint for lecturer/admin
-- Approval record stored in approvals table
-
-## Project structure
-
-- backend: REST API, authentication, event workflow APIs
-- frontend: Authentication UI (register/login/dashboard)
-
-## Setup
-
-### Option A: Run MySQL via Docker Compose (recommended)
-
-1. Start database services:
+1. เริ่มบริการฐานข้อมูล
 
 ```bash
 docker compose up -d
 ```
 
-2. Open phpMyAdmin:
-   - URL: `http://localhost:8080`
-   - Server: `mysql`
-   - Username: `root`
-   - Password: `11111111`
+2. เปิด phpMyAdmin
+- URL: http://localhost:8080
+- Server: mysql
+- Username: root
+- Password: 11111111
 
-3. Backend `.env` values for this setup:
+3. ตั้งค่าไฟล์ของ backend
 
 ```env
 DB_HOST=localhost
@@ -64,18 +103,11 @@ DB_NAME=university_events_db
 PORT=5001
 ```
 
-The schema is auto-imported on first run from `backend/database/schema.sql`.
+### ทางเลือก B: ใช้ MySQL ในเครื่อง
 
-### Option B: Use local MySQL service
-
-1. Copy backend environment file:
-   - from `backend/.env.example`
-   - to `backend/.env`
-
-2. Create database schema in MySQL:
-   - execute `backend/database/schema.sql`
-
-3. Install dependencies:
+1. คัดลอก backend/.env.example เป็น backend/.env
+2. สร้าง schema ด้วยไฟล์ backend/database/schema.sql
+3. ติดตั้ง dependencies
 
 ```bash
 cd backend
@@ -85,51 +117,65 @@ cd ../frontend
 npm install
 ```
 
-4. Run backend:
+4. รัน backend
 
 ```bash
 cd backend
 npm run dev
 ```
 
-5. Run frontend:
+5. รัน frontend
 
 ```bash
 cd frontend
 npm run dev
 ```
 
-Default API base URL in frontend: `http://localhost:5001/api`
+ค่า API พื้นฐานของ frontend คือ http://localhost:5001/api
 
-## Implemented API endpoints
+## API หลักที่รองรับ
 
-- `POST /api/auth/register`
-- `POST /api/auth/login`
-- `GET /api/auth/me`
-- `GET /api/events`
-- `POST /api/events`
-- `GET /api/events/registrations/me`
-- `POST /api/events/:eventId/register` (STUDENT only)
-- `PATCH /api/events/:eventId/cancel-registration` (STUDENT only)
-- `GET /api/approvals/pending`
-- `PATCH /api/approvals/:eventId`
+- POST /api/auth/register
+- POST /api/auth/login
+- GET /api/auth/me
+- GET /api/events
+- POST /api/events
+- GET /api/events/registrations/me
+- POST /api/events/:eventId/register
+- PATCH /api/events/:eventId/cancel-registration
+- GET /api/approvals/pending
+- PATCH /api/approvals/:eventId
 
-## Automated Testing (D3)
+## การทดสอบ
 
-Run from project root:
+รันจาก root โปรเจกต์
 
 ```bash
+npm --prefix backend test
 npm --prefix backend run test:unit
 npm --prefix backend run test:integration
 npm --prefix backend run test:coverage
 ```
 
-Coverage artifacts are generated in `coverage/`.
+รายงาน coverage ถูกสร้างในโฟลเดอร์ coverage
 
-## Next implementation targets
+## สถานะโครงการ
 
-- Story 4 Edit event
-- Story 8 Check-in attendance
-- Story 9 Participation history
-- Story 12 Feedback (one submission per attended event)
-- Story 13 Search and filter events
+สถานะปัจจุบัน: พัฒนาและทดสอบฟีเจอร์หลักเสร็จในระดับใช้งานได้
+
+แนวทางพัฒนาต่อ:
+- เพิ่ม branch coverage สำหรับจุดที่ยังต่ำ
+- เพิ่ม rate limiting และ security logging
+- ทำ load test อย่างเป็นทางการสำหรับ production readiness
+
+## คณะผู้จัดทำ
+
+| ชื่อ-นามสกุล | บทบาท |
+|---|---|
+| นางสาวกมลชนก เรืองแสน | Product Owner |
+| พชรพล เชิดชู | Scrum Master |
+| นายทิษณุ กลิ่นกำธรกุล | Developer |
+| นายรพีพัฒน์ ทับทอง | QA / DevOps |
+| นายเทพเมธี ศรีพล | QA / DevOps |
+
+จัดทำสำหรับรายวิชา 88744065 Software Development
