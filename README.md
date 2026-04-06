@@ -26,7 +26,7 @@ University Event Management System เป็นแพลตฟอร์มเว
 
 ### 4. ระบบตรวจสอบคุณภาพ
 - Unit และ Integration tests ด้วย Jest + Supertest
-- วัด coverage อัตโนมัติ
+- วัด coverage 
 - ตรวจคุณภาพโค้ดด้วย ESLint
 
 ## บทบาทผู้ใช้งาน
