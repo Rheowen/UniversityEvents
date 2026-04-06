@@ -205,7 +205,6 @@
 - `coverage/coverage-summary.json`
 - ผลคำสั่ง `npm --prefix backend run test:coverage`
 - ผลคำสั่ง `npm --prefix backend run lint`
-- ผลคำสั่ง `npm --prefix frontend run lint`
 - `docs/Security_Assessment_Report.md`
 - `docs/Performance_Test_Report.md`
 - `docs/Risk_Register.md`
